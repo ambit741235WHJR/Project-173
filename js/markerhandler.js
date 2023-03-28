@@ -68,6 +68,7 @@ AFRAME.registerComponent("markerhandler", {
       var orderButtton = document.getElementById("order-button");
       var orderSummaryButtton = document.getElementById("order-summary-button");
       var payButton = document.getElementById("pay-button");
+      var ratingButton = document.getElementById("rating-button");
       // Handling Click Events
       orderButtton.addEventListener("click", () => {
         uid = uid.toUpperCase();
@@ -87,6 +88,8 @@ AFRAME.registerComponent("markerhandler", {
       );
 
       payButton.addEventListener("click", () => this.handlePayment());
+
+      ratingButton.addEventListener("click", () => this.handleRatings(toy));
     }
   },
   handleOrder: function(uid, toy) {
@@ -234,6 +237,34 @@ AFRAME.registerComponent("markerhandler", {
           buttons: false
         });
       });
+  },
+  handleRatings: function(toy) {
+    // Close Modal
+    document.getElementById("rating-modal-div").style.display = "flex";
+    document.getElementById("rating-input").value = "0";
+
+    var saveRatingButton = document.getElementById("save-rating-button");
+    saveRatingButton.addEventListener("click", () => {
+      document.getElementById("rating-modal-div").style.display = "none";
+      var rating = document.getElementById("rating-input").value;
+
+      firebase
+        .firestore()
+        .collection("toys")
+        .doc(toy.id)
+        .update({
+          last_rating: parseFloat(rating)
+        })
+        .then(() => {
+          swal({
+            icon: "success",
+            title: "Thanks For Rating!",
+            text: "We Hope You Like Toy !!",
+            timer: 2500,
+            buttons: false
+          });
+        });
+    });
   },
   handleMarkerLost: function() {
     // Changing button div visibility

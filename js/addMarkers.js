@@ -106,6 +106,21 @@ AFRAME.registerComponent("createmarkers", {
           value: `PRICE : $${toy.price}`
         });
         mainPlane.appendChild(price);
+
+        // Adding the rating to the main plane
+        var rating = document.createElement("a-entity");
+        rating.setAttribute("id", `rating-${toy.id}`);
+        rating.setAttribute("position", { x: -0.75, y: -1, z: 0.1 });
+        rating.setAttribute("rotation", { x: 0, y: 0, z: 0 });
+        rating.setAttribute("text", {
+          font: "aileronsemibold",
+          color: "#290149",
+          width: 2,
+          height: 5,
+          align: "center",
+          value: `RATING : ${toy.last_rating}`
+        });
+        mainPlane.appendChild(rating);
       });
     },
     getAllToys: async function() {
