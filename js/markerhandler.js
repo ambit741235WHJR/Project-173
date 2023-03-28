@@ -1,12 +1,13 @@
 AFRAME.registerComponent("markerhandler", {
   init: async function() {
+    // Get the toys collection
+    var toys = await this.getToys();
+    
     this.el.addEventListener("markerFound", () => {
-      console.log("marker is found");
       this.handleMarkerFound();
     });
 
     this.el.addEventListener("markerLost", () => {
-      console.log("marker is lost");
       this.handleMarkerLost();
     });
   },
@@ -42,5 +43,16 @@ AFRAME.registerComponent("markerhandler", {
     // Changing button div visibility
     var buttonDiv = document.getElementById("button-div");
     buttonDiv.style.display = "none";
+  },
+
+  getToys: async function() {
+    //Get the toys from the firestore database
+    return await firebase
+      .firestore()
+      .collection("toys")
+      .get()
+      .then(snap => {
+        return snap.docs.map(doc => doc.data());
+      });
   }
 });
