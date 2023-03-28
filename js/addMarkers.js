@@ -24,7 +24,7 @@ AFRAME.registerComponent("createmarkers", {
         model.setAttribute("animation-mixer", {});
         marker.appendChild(model);
   
-        // description Container
+        // Adding main plane to the scene
         var mainPlane = document.createElement("a-plane");
         mainPlane.setAttribute("id", `main-plane-${toy.id}`);
         mainPlane.setAttribute("position", { x: 0, y: 0, z: 0 });
@@ -36,7 +36,7 @@ AFRAME.registerComponent("createmarkers", {
         mainPlane.setAttribute("height", 2.5);
         marker.appendChild(mainPlane);
   
-        // toy title background plane
+        // Adding Title Plane to the scene
         var titlePlane = document.createElement("a-plane");
         titlePlane.setAttribute("id", `title-plane-${toy.id}`);
         titlePlane.setAttribute("position", { x: 0, y: 1.1, z: 0.1 });
@@ -46,7 +46,7 @@ AFRAME.registerComponent("createmarkers", {
         titlePlane.setAttribute("material", { color: "#f14668" });
         mainPlane.appendChild(titlePlane);
   
-        // Toy title
+        // Adding Toy title to the Title Plane
         var toyTitle = document.createElement("a-entity");
         toyTitle.setAttribute("id", `toy-title-${toy.id}`);
         toyTitle.setAttribute("position", { x: 1.3, y: 0, z: 0.1 });
@@ -61,7 +61,7 @@ AFRAME.registerComponent("createmarkers", {
         });
         titlePlane.appendChild(toyTitle);
   
-        // description List
+        // Adding the description to the main plane
         var description = document.createElement("a-entity");
         description.setAttribute("id", `description-${toy.id}`);
         description.setAttribute("position", { x: 0.04, y: 0, z: 0.1 });
@@ -78,6 +78,7 @@ AFRAME.registerComponent("createmarkers", {
         });
         mainPlane.appendChild(description);
   
+        // Adding the age to the main plane
         var age = document.createElement("a-entity");
         age.setAttribute("id", `age-${toy.id}`);
         age.setAttribute("position", { x: -0.75, y: -0.8, z: 0.1 });
@@ -90,8 +91,21 @@ AFRAME.registerComponent("createmarkers", {
           align: "center",
           value: `AGE : ${toy.age_group}`
         });
-  
         mainPlane.appendChild(age);
+
+        // Adding the price to the main plane
+        var price = document.createElement("a-entity");
+        price.setAttribute("id", `price-${toy.id}`);
+        price.setAttribute("position", { x: -0.65, y: 0.75, z: 0.1 });
+        price.setAttribute("rotation", { x: 0, y: 0, z: 0 });
+        price.setAttribute("text", {
+          font: "aileronsemibold",
+          color: "#290149",
+          width: 5,
+          align: "center",
+          value: `PRICE : $${toy.price}`
+        });
+        mainPlane.appendChild(price);
       });
     },
     getAllToys: async function() {
